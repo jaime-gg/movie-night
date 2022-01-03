@@ -29,7 +29,7 @@ We propose the development of an application that uses web API’s, such as that
 
 ## Tech Stack
 
-- What languages is it written with: 
+- What languages is it written with: HTML, CSS, JavaScript
 
 - What libraries are used: 
 
@@ -42,7 +42,7 @@ We propose the development of an application that uses web API’s, such as that
 
 ## MVP (Minimum Viable Product)
 
--
+- The MVP will be an application that allows a user to input the name of a movie. The application will return information about where to stream the movie, ratings, and a synopsis/description. 
 
 
 ## Stretch Goals
