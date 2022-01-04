@@ -7,6 +7,10 @@ background: linear-gradient(
 background-size: cover;
 }
 
+.hero-body {
+    align-items: start;
+}
+
 .page-top {
     margin-top: 1.5rem;
 }
