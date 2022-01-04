@@ -6,7 +6,11 @@ var getMovieInformation = function(movie) {
             if (response.ok) {
                 response.json().then(function (data) {
                     console.log(data);
-                    displayMovieData(data);
+                    if("Error" in data){
+                        console.log("unable to find data for this movie")
+                    }else{
+                        displayMovieData(data);
+                    }
                 });
             }
             else {
@@ -27,7 +31,9 @@ var displayMovieData = function (movieInfo) {
             metaCritic: "N/A",
         }
 
-        if (ratingArray.length > 1) {
+        console.log(ratingArray)
+
+        // if (ratingArray.length > 1) {
             for (let ratingSource of ratingArray) {
                 switch (ratingSource.Source) {
                     case "Internet Movie Database":
@@ -42,9 +48,9 @@ var displayMovieData = function (movieInfo) {
                 }
             }
             return ratings
-        } else {
-            return ratings
-        }
+        // } else {
+        //     return ratings
+        // }
     }
 
     let movieDetails = {
@@ -83,8 +89,6 @@ var displayMovieData = function (movieInfo) {
     var movieActors = JSON.stringify(movieInfo.Actors);
     console.log(movieActors);
 }
-
-getMovieInformation('cars');
 
 /**
  * Generates a Movie card based on the Movie Details Objects passed into it
@@ -192,4 +196,12 @@ const createMovieCard = (movieDetails) => {
     //TODO Jamie need you help knowing what Class/ID To append to
     $("#Search-Cards").append(column)
 }
+
+
+$("#form").submit(function(event){
+    event.preventDefault();
+    const input = $($(this)[0][0]).val().trim()
+
+    getMovieInformation(input)
+})
 
