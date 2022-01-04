@@ -5,3 +5,8 @@ fetch('http://www.omdbapi.com/?apikey=301ca359&t=beauty+and+the+beast&plot=full'
             console.log(data);
         })
     });
+
+
+
+const testingLocation = $(".test")
+
