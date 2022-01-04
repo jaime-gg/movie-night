@@ -1,0 +1,11 @@
+#VsCode
+.vscode
+
+# MacOS
+.DS_Store
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
