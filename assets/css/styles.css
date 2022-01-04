@@ -1,0 +1,17 @@
+.hero.is-info {
+background: linear-gradient(
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.15)
+    ), 
+    url('../images/hero-background.jpg') no-repeat center center fixed;
+background-size: cover;
+}
+
+.page-top {
+    margin-top: 1.5rem;
+}
+
+.movie-cards {
+    background: rgba(197, 8, 8, 0.15);
+}
+  
