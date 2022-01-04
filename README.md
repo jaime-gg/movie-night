@@ -10,7 +10,7 @@ We propose the development of an application that uses web API’s, such as that
 
 ## Developers
 
-1. Jaime Gallegos 
+1. Jaime Gallegos Gallegos
 
 2. Ryan Moon
 
