@@ -1,4 +1,17 @@
 
+const imdbApiKey = "k_bxw4k76r"
+
+const getRandomMovie = async () => {
+  await fetch(`https://imdb-api.com/en/API/Top250Movies/${imdbApiKey}`).then(response=>{
+      if(response.ok){
+          response.json().then(data=>{
+              const index = Math.floor(Math.random()*data.items.length)
+              getMovieInformation(data.items[index].title)
+          })
+      }
+  })
+}
+
 var getMovieInformation = function(movie) {
     var apiUrl = 'http://www.omdbapi.com/?apikey=301ca359&t=' + movie + '&plot=full';
     fetch(apiUrl)
@@ -21,7 +34,6 @@ var getMovieInformation = function(movie) {
 }
 
 var displayMovieData = function (movieInfo) {
-//probably way more info here than we need, but I just wanted to create all these so we can use what we want!
 
     const parseRatingData = (ratingArray) => {
 
@@ -31,9 +43,6 @@ var displayMovieData = function (movieInfo) {
             metaCritic: "N/A",
         }
 
-        console.log(ratingArray)
-
-        // if (ratingArray.length > 1) {
             for (let ratingSource of ratingArray) {
                 switch (ratingSource.Source) {
                     case "Internet Movie Database":
@@ -48,9 +57,6 @@ var displayMovieData = function (movieInfo) {
                 }
             }
             return ratings
-        // } else {
-        //     return ratings
-        // }
     }
 
     let movieDetails = {
@@ -65,29 +71,6 @@ var displayMovieData = function (movieInfo) {
 
     createMovieCard(movieDetails)
 
-    var movieTitle = JSON.stringify(movieInfo.Title);
-    console.log(movieTitle);
-
-    var moviePlot = JSON.stringify(movieInfo.Plot);
-    console.log(moviePlot);
-
-    var moviePoster = JSON.stringify(movieInfo.Poster);
-    console.log(moviePoster);
-
-    var movieRatings = movieInfo.Ratings;
-    for (var i = 0; i < movieRatings.length; i++) {
-        var rating = movieRatings[i].Source + ' gives this movie ' + movieRatings[i].Value;
-        console.log(rating);
-    }
-
-    var movieRuntime = JSON.stringify(movieInfo.Runtime);
-    console.log(movieRuntime);
-
-    var movieYear = JSON.stringify(movieInfo.Year);
-    console.log(movieYear);
-
-    var movieActors = JSON.stringify(movieInfo.Actors);
-    console.log(movieActors);
 }
 
 /**
@@ -190,14 +173,15 @@ const createMovieCard = (movieDetails) => {
 
     //Handler for deleting the card
     $(deleteButtonEl).click(function () {
-        cardEl.remove()
+        column.remove()
     })
 
-    //TODO Jamie need you help knowing what Class/ID To append to
     $("#Search-Cards").append(column)
 }
 
-
+/**
+ * Submit movie handler
+ */
 $("#form").submit(function(event){
     event.preventDefault();
     const input = $($(this)[0][0]).val().trim()
@@ -205,11 +189,6 @@ $("#form").submit(function(event){
     getMovieInformation(input)
 })
 
-(function() {
-    var burger = document.querySelector('.burger');
-    var menu = document.querySelector('#'+burger.dataset.target);
-    burger.addEventListener('click', function() {
-        burger.classList.toggle('is-active');
-        menu.classList.toggle('is-active');
-    });
-})();
+$("#popular").click(async ()=>{
+    await getRandomMovie()
+})
