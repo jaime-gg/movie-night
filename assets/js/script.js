@@ -192,7 +192,7 @@ const createMovieCard = (movieDetails) => {
 
     //Handler for deleting the card
     $(deleteButtonEl).click(function () {
-        cardEl.remove()
+        column.remove()
     })
 
     $("#Search-Cards").append(column)
