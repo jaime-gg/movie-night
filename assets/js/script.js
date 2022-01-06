@@ -1,6 +1,5 @@
-
 const imdbApiKey = "k_bxw4k76r"
-    
+
 let favoriteMovies = [];
 
 let autoFillMovies = []
@@ -32,7 +31,6 @@ const createAutoFillListOfMovies = function () {
                 for (let movie of data.items) {
                     autoFillMovies.push(movie.title)
                 }
-                console.log(data)
             })
         }else{
             errorHandler("Cannot get info from IMDB")
@@ -139,6 +137,11 @@ const createMovieCard = (movieDetails) => {
     cardHeaderTitle.appendTo(cardHeader)
     cardHeader.appendTo(cardEl)
 
+    //TODO This delete button location is temporary
+    //Card DeleteButton
+    const deleteButtonEl = $("<i class='card-header-title fas fa-trash'>")
+    deleteButtonEl.appendTo(cardHeader)
+
     //Card Poster
     const cardPosterEl = $("<div class='card-image'>")
     const cardPosterFigureEl = $("<figure class='image is-4by3'>")
@@ -170,10 +173,8 @@ const createMovieCard = (movieDetails) => {
     const cardFooter = $("<footer class='card-footer'>")
     const favoriteButton = $("<i class='card-footer-item'>")
     const moreButton = $("<i class='fas fa-angle-down card-footer-item'>")
-    const deleteButtonEl = $("<i class='card-footer-item fas fa-trash'>")
     favoriteButton.appendTo(cardFooter)
     moreButton.appendTo(cardFooter)
-    deleteButtonEl.appendTo(cardFooter)
     cardFooter.appendTo(cardEl)
 
     //Sets favorite icon depending on if the movie is already favorite on creation
@@ -239,7 +240,6 @@ $("#form").submit(function(event){
     event.preventDefault();
     const input = $($(this)[0][0]).val().trim()
     getMovieInformation(input)
-<<<<<<< HEAD
     $("#autocomplete").val("")
 })
 
@@ -259,13 +259,9 @@ $("#autocomplete").autocomplete({
         response(results.slice(0,10))
     },
     open:function(){
-      $("ul.ui-menu").width($(this).innerWidth())
+        $("ul.ui-menu").width($(this).innerWidth())
     },
     minLength:0,
 
 })
 
-createAutoFillListOfMovies()
-=======
-})
->>>>>>> aesthetics
