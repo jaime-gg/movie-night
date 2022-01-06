@@ -3,10 +3,26 @@ const imdbApiKey = "k_bxw4k76r"
 
 let autoFillMovies =[]
 
+/**
+ * Displays error text and removes error text after 10 seconds
+ * @param errorMessage
+ */
 const errorHandler = (errorMessage) => {
+
+    const errorEl = $("<div class='notification is-warning '>").text(errorMessage)
+
+    $("#error-handler").append(errorEl)
+
+    const deleteError = setInterval(()=>{
+        $(errorEl).remove()
+        clearInterval(deleteError)
+    },10*1000)
 
 }
 
+/**
+ * Creates an array of 250 movies that are used for autofilling the search movie form
+ */
 const createAutoFillListOfMovies = function () {
     fetch(`https://imdb-api.com/en/API/Top250Movies/${imdbApiKey}`).then(response=>{
         if(response.ok){
@@ -21,12 +37,18 @@ const createAutoFillListOfMovies = function () {
     })
 }
 
-
+/**
+ * Creates a random movie from the array of 250 movies and displays the movie
+ */
 const getRandomMovie = () => {
     const index = Math.floor(Math.random()*data.items.length)
     getMovieInformation(autoFillMovies[index])
 }
 
+/**
+ * fetches information on the movie submited creates the movie card if a card is found
+ * @param movie
+ */
 var getMovieInformation = function(movie) {
     var apiUrl = 'http://www.omdbapi.com/?apikey=301ca359&t=' + movie + '&plot=full';
     fetch(apiUrl)
@@ -47,6 +69,10 @@ var getMovieInformation = function(movie) {
         });
 }
 
+/**
+ * organizes the information retreived on a movie
+ * @param movieInfo
+ */
 var displayMovieData = function (movieInfo) {
 
     const parseRatingData = (ratingArray) => {
@@ -203,10 +229,16 @@ $("#form").submit(function(event){
     $("#autocomplete").val("")
 })
 
+/**
+ * Popular movie button handler
+ */
 $("#popular").click(()=>{
     getRandomMovie()
 })
 
+/**
+ * Handler for the autocomplete
+ */
 $("#autocomplete").autocomplete({
     source:(request,response)=>{
         let results = $.ui.autocomplete.filter(autoFillMovies, $("#autocomplete").val());
