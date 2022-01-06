@@ -1,7 +1,8 @@
 
 const imdbApiKey = "k_bxw4k76r"
 
-let autoFillMovies =[]
+let favoriteMovies = [];
+let autoFillMovies = []
 
 /**
  * Displays error text and removes error text after 10 seconds
@@ -24,10 +25,10 @@ const errorHandler = (errorMessage) => {
  * Creates an array of 250 movies that are used for autofilling the search movie form
  */
 const createAutoFillListOfMovies = function () {
-    fetch(`https://imdb-api.com/en/API/Top250Movies/${imdbApiKey}`).then(response=>{
-        if(response.ok){
-            response.json().then(data=>{
-                for(let movie of data.items){
+    fetch(`https://imdb-api.com/en/API/Top250Movies/${imdbApiKey}`).then(response => {
+        if (response.ok) {
+            response.json().then(data => {
+                for (let movie of data.items) {
                     autoFillMovies.push(movie.title)
                 }
             })
@@ -83,20 +84,20 @@ var displayMovieData = function (movieInfo) {
             metaCritic: "N/A",
         }
 
-            for (let ratingSource of ratingArray) {
-                switch (ratingSource.Source) {
-                    case "Internet Movie Database":
-                        ratings.imdb = `${eval(ratingSource.Value) * 100}%`
-                        break;
-                    case 'Rotten Tomatoes':
-                        ratings.rottenTomatoes = ratingSource.Value
-                        break;
-                    case 'Metacritic':
-                        ratings.metaCritic = `${eval(ratingSource.Value) * 100}%`
-                        break;
-                }
+        for (let ratingSource of ratingArray) {
+            switch (ratingSource.Source) {
+                case "Internet Movie Database":
+                    ratings.imdb = `${eval(ratingSource.Value) * 100}%`
+                    break;
+                case 'Rotten Tomatoes':
+                    ratings.rottenTomatoes = ratingSource.Value
+                    break;
+                case 'Metacritic':
+                    ratings.metaCritic = `${eval(ratingSource.Value) * 100}%`
+                    break;
             }
-            return ratings
+        }
+        return ratings
     }
 
     let movieDetails = {
@@ -205,9 +206,22 @@ const createMovieCard = (movieDetails) => {
         if (notFavorited) {
             favoriteButton.removeClass("far")
             favoriteButton.addClass("fas")
+            const favoritedItem = (this.closest('.card'))
+            favoritedTitle = favoritedItem.querySelector('.card-header-title').innerHTML;
+            if (!favoriteMovies.includes(favoritedTitle)) {
+                favoriteMovies.push(favoritedTitle)
+                localStorage.setItem('favorites', favoriteMovies)
+            }
+
         } else {
             favoriteButton.removeClass("fas")
             favoriteButton.addClass("far")
+            for (var i = 0; i < favoriteMovies.length; i++) {
+                if (favoriteMovies[i] === favoritedTitle) {
+                    favoriteMovies.splice(i, 1);
+                    localStorage.setItem('favorites', favoriteMovies)
+                }
+            }
         }
     })
 
