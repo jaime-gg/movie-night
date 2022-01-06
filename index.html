@@ -23,11 +23,11 @@
                         </a>
 
                         <!-- converts menu to 'burger' nav when on mobile -->
-                        <span class="navbar-burger burger" data-target="navbarMenu">
+                        <div class="navbar-burger burger" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active'); document.querySelector('.navbar-burger').classList.toggle('is-active');">
                             <span></span>
                             <span></span>
                             <span></span>
-                        </span>
+                        </div>
                     </div>
                     <div id="navbarMenu" class="navbar-menu">
                         <div class="navbar-end">

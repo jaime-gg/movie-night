@@ -205,4 +205,3 @@ $("#form").submit(function(event){
 
     getMovieInformation(input)
 })
-
