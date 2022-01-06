@@ -188,11 +188,20 @@ const createMovieCard = (movieDetails) => {
             favoriteButton.addClass("fas")
             const favoritedItem = (this.closest('.card'))
             favoritedTitle = favoritedItem.querySelector('.card-header-title').innerHTML;
-            favoriteMovies.push(favoritedTitle)
-            
+            if (!favoriteMovies.includes(favoritedTitle)) {
+                favoriteMovies.push(favoritedTitle)
+                localStorage.setItem('favorites', favoriteMovies)
+            }
+
         } else {
             favoriteButton.removeClass("fas")
             favoriteButton.addClass("far")
+            for( var i = 0; i < favoriteMovies.length; i++){ 
+                if ( favoriteMovies[i] === favoritedTitle) { 
+                    favoriteMovies.splice(i, 1); 
+                    localStorage.setItem('favorites', favoriteMovies)
+                }
+            }
         }
     })
 
