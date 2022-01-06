@@ -8,11 +8,11 @@
 }
 
 .hero.is-info {
-    /*background: linear-gradient(*/
-    /*    rgba(255, 255, 255, 0.1),*/
-    /*    rgba(0, 0, 0, 0)*/
-    /*    ), */
-        /*url('../images/hero-background.jpg') no-repeat center center fixed;*/
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.1),
+        rgba(0, 0, 0, 0)
+        ), 
+        url('../images/hero-background.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
