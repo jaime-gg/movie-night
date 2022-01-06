@@ -1,7 +1,8 @@
 
 const imdbApiKey = "k_bxw4k76r"
-
+    
 let favoriteMovies = [];
+
 let autoFillMovies = []
 
 const createAutoFillListOfMovies = function () {
@@ -186,7 +187,7 @@ const createMovieCard = (movieDetails) => {
             favoritedTitle = favoritedItem.querySelector('.card-header-title').innerHTML;
             if (!favoriteMovies.includes(favoritedTitle)) {
                 favoriteMovies.push(favoritedTitle)
-                localStorage.setItem('favorites', favoriteMovies)
+                localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
             }
 
         } else {
@@ -195,7 +196,7 @@ const createMovieCard = (movieDetails) => {
             for (var i = 0; i < favoriteMovies.length; i++) {
                 if (favoriteMovies[i] === favoritedTitle) {
                     favoriteMovies.splice(i, 1);
-                    localStorage.setItem('favorites', favoriteMovies)
+                    localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
                 }
             }
         }
