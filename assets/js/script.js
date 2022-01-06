@@ -1,4 +1,6 @@
 
+const imdbApiKey = "k_bxw4k76r"
+
 var getMovieInformation = function(movie) {
     var apiUrl = 'http://www.omdbapi.com/?apikey=301ca359&t=' + movie + '&plot=full';
     fetch(apiUrl)
@@ -193,7 +195,6 @@ const createMovieCard = (movieDetails) => {
         cardEl.remove()
     })
 
-    //TODO Jamie need you help knowing what Class/ID To append to
     $("#Search-Cards").append(column)
 }
 
