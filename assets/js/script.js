@@ -1,6 +1,22 @@
 
 const imdbApiKey = "k_bxw4k76r"
 
+let autoFillMovies =[]
+
+const createAutoFillListOfMovies = function () {
+    fetch(`https://imdb-api.com/en/API/Top250Movies/${imdbApiKey}`).then(response=>{
+        if(response.ok){
+            response.json().then(data=>{
+                for(let movie of data.items){
+                    autoFillMovies.push(movie.title)
+                }
+                console.log(autoFillMovies)
+            })
+        }
+    })
+}
+
+
 const getRandomMovie = async () => {
   await fetch(`https://imdb-api.com/en/API/Top250Movies/${imdbApiKey}`).then(response=>{
       if(response.ok){
@@ -192,3 +208,17 @@ $("#form").submit(function(event){
 $("#popular").click(async ()=>{
     await getRandomMovie()
 })
+
+$("#autocomplete").autocomplete({
+    source:(request,response)=>{
+        let results = $.ui.autocomplete.filter(autoFillMovies, $("#autocomplete").val());
+        response(results.slice(0,10))
+    },
+    open:function(){
+      $("ul.ui-menu").width($(this).innerWidth())
+    },
+    minLength:0,
+
+})
+
+createAutoFillListOfMovies()

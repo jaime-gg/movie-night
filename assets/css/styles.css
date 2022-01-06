@@ -8,11 +8,11 @@
 }
 
 .hero.is-info {
-    /*background: linear-gradient(*/
-    /*    rgba(255, 255, 255, 0.1),*/
-    /*    rgba(0, 0, 0, 0)*/
-    /*    ), */
-        /*url('../images/hero-background.jpg') no-repeat center center fixed;*/
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.1),
+        rgba(0, 0, 0, 0)
+        ),
+        url('../images/hero-background.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -45,3 +45,16 @@ p > a {
     text-decoration: underline;
     text-underline-offset: 2px;
 }
+
+
+/*Themeing for autocomplete box*/
+.ui-autocomplete{
+    background: white;
+    border-bottom: black 2px solid;
+    border-left: black 2px solid;
+    border-right: black 2px solid;
+}
+
+/*.ui-autocomplete{*/
+/*    background: #852024;*/
+/*}*/
