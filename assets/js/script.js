@@ -201,8 +201,8 @@ const createMovieCard = (movieDetails) => {
 $("#form").submit(function(event){
     event.preventDefault();
     const input = $($(this)[0][0]).val().trim()
-
     getMovieInformation(input)
+    $("#autocomplete").val("")
 })
 
 $("#popular").click(async ()=>{
