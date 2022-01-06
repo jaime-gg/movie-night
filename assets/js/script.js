@@ -3,6 +3,10 @@ const imdbApiKey = "k_bxw4k76r"
 
 let autoFillMovies =[]
 
+const errorHandler = (errorMessage) => {
+
+}
+
 const createAutoFillListOfMovies = function () {
     fetch(`https://imdb-api.com/en/API/Top250Movies/${imdbApiKey}`).then(response=>{
         if(response.ok){
@@ -10,22 +14,17 @@ const createAutoFillListOfMovies = function () {
                 for(let movie of data.items){
                     autoFillMovies.push(movie.title)
                 }
-                console.log(autoFillMovies)
             })
+        }else{
+            errorHandler("Cannot get info from IMDB")
         }
     })
 }
 
 
-const getRandomMovie = async () => {
-  await fetch(`https://imdb-api.com/en/API/Top250Movies/${imdbApiKey}`).then(response=>{
-      if(response.ok){
-          response.json().then(data=>{
-              const index = Math.floor(Math.random()*data.items.length)
-              getMovieInformation(data.items[index].title)
-          })
-      }
-  })
+const getRandomMovie = () => {
+    const index = Math.floor(Math.random()*data.items.length)
+    getMovieInformation(autoFillMovies[index])
 }
 
 var getMovieInformation = function(movie) {
@@ -36,15 +35,14 @@ var getMovieInformation = function(movie) {
                 response.json().then(function (data) {
                     console.log(data);
                     if("Error" in data){
-                        console.log("unable to find data for this movie")
+                        errorHandler("unable to find data for this movie")
                     }else{
                         displayMovieData(data);
                     }
                 });
             }
             else {
-                //replace this later with a modal so the user can see it since we can't use alerts
-                console.log("unable to find data for this movie")
+                errorHandler("unable to find data for this movie")
             }
         });
 }
@@ -205,8 +203,8 @@ $("#form").submit(function(event){
     $("#autocomplete").val("")
 })
 
-$("#popular").click(async ()=>{
-    await getRandomMovie()
+$("#popular").click(()=>{
+    getRandomMovie()
 })
 
 $("#autocomplete").autocomplete({
