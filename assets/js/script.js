@@ -1,6 +1,8 @@
 
 const imdbApiKey = "k_bxw4k76r"
 
+let favoriteMovies = [];
+
 var getMovieInformation = function(movie) {
     var apiUrl = 'http://www.omdbapi.com/?apikey=301ca359&t=' + movie + '&plot=full';
     fetch(apiUrl)
@@ -184,6 +186,10 @@ const createMovieCard = (movieDetails) => {
         if (notFavorited) {
             favoriteButton.removeClass("far")
             favoriteButton.addClass("fas")
+            const favoritedItem = (this.closest('.card'))
+            favoritedTitle = favoritedItem.querySelector('.card-header-title').innerHTML;
+            favoriteMovies.push(favoritedTitle)
+            
         } else {
             favoriteButton.removeClass("fas")
             favoriteButton.addClass("far")
@@ -197,6 +203,8 @@ const createMovieCard = (movieDetails) => {
 
     $("#Search-Cards").append(column)
 }
+
+
 
 
 $("#form").submit(function(event){
