@@ -45,6 +45,7 @@ p > a {
     text-decoration: underline;
     text-underline-offset: 2px;
 }
+<<<<<<< HEAD
 
 
 /*Themeing for autocomplete box*/
@@ -54,3 +55,5 @@ p > a {
     border-left: black 2px solid;
     border-right: black 2px solid;
 }
+=======
+>>>>>>> aesthetics

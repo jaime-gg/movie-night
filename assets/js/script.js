@@ -239,6 +239,7 @@ $("#form").submit(function(event){
     event.preventDefault();
     const input = $($(this)[0][0]).val().trim()
     getMovieInformation(input)
+<<<<<<< HEAD
     $("#autocomplete").val("")
 })
 
@@ -265,3 +266,6 @@ $("#autocomplete").autocomplete({
 })
 
 createAutoFillListOfMovies()
+=======
+})
+>>>>>>> aesthetics
