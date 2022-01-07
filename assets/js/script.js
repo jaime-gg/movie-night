@@ -42,7 +42,7 @@ const createAutoFillListOfMovies = function () {
  * Creates a random movie from the array of 250 movies and displays the movie
  */
 const getRandomMovie = () => {
-    const index = Math.floor(Math.random()*data.items.length)
+    const index = Math.floor(Math.random() * autoFillMovies.length)
     getMovieInformation(autoFillMovies[index])
 }
 
@@ -56,8 +56,7 @@ var getMovieInformation = function(movie) {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    console.log(data);
-                    if("Error" in data){
+                    if ("Error" in data) {
                         errorHandler("unable to find data for this movie")
                     }else{
                         displayMovieData(data);
@@ -87,13 +86,13 @@ var displayMovieData = function (movieInfo) {
         for (let ratingSource of ratingArray) {
             switch (ratingSource.Source) {
                 case "Internet Movie Database":
-                    ratings.imdb = `${eval(ratingSource.Value) * 100}%`
+                    ratings.imdb = `${Math.trunc(eval(ratingSource.Value) * 100)}%`
                     break;
                 case 'Rotten Tomatoes':
                     ratings.rottenTomatoes = ratingSource.Value
                     break;
                 case 'Metacritic':
-                    ratings.metaCritic = `${eval(ratingSource.Value) * 100}%`
+                    ratings.metaCritic = `${Math.trunc(eval(ratingSource.Value) * 100)}%`
                     break;
             }
         }
@@ -121,7 +120,7 @@ var displayMovieData = function (movieInfo) {
 const createMovieCard = (movieDetails) => {
 
     //TODO - write a function to check if this movie is in the favorites on creation
-    const isMovieFavorited = false
+    const isMovieFavorited = favoriteMovies.includes(movieDetails.movieTitle)
 
     //Create Column
     const column = $("<div class='column'>")
@@ -173,8 +172,10 @@ const createMovieCard = (movieDetails) => {
     const cardFooter = $("<footer class='card-footer'>")
     const favoriteButton = $("<i class='card-footer-item'>")
     const moreButton = $("<i class='fas fa-angle-down card-footer-item'>")
+    const deleteButtonEl = $("<i class='card-footer-item fas fa-trash'>")
     favoriteButton.appendTo(cardFooter)
     moreButton.appendTo(cardFooter)
+    deleteButtonEl.appendTo(cardFooter)
     cardFooter.appendTo(cardEl)
 
     //Sets favorite icon depending on if the movie is already favorite on creation
@@ -206,23 +207,11 @@ const createMovieCard = (movieDetails) => {
         if (notFavorited) {
             favoriteButton.removeClass("far")
             favoriteButton.addClass("fas")
-            const favoritedItem = (this.closest('.card'))
-            favoritedTitle = favoritedItem.querySelector('.card-header-title').innerHTML;
-            if (!favoriteMovies.includes(favoritedTitle)) {
-                favoriteMovies.push(favoritedTitle)
-                localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
-            }
-
         } else {
             favoriteButton.removeClass("fas")
             favoriteButton.addClass("far")
-            for (var i = 0; i < favoriteMovies.length; i++) {
-                if (favoriteMovies[i] === favoritedTitle) {
-                    favoriteMovies.splice(i, 1);
-                    localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
-                }
-            }
         }
+        saveMovieHandler(movieDetails.movieTitle)
     })
 
     //Handler for deleting the card
@@ -232,6 +221,38 @@ const createMovieCard = (movieDetails) => {
 
     $("#Search-Cards").append(column)
 }
+
+/**
+ * Handles saving and removing movies
+ * @param movieTitle
+ */
+const saveMovieHandler = (movieTitle) => {
+    //if movie is not in favorite
+    if (!favoriteMovies.includes(movieTitle)) {
+        favoriteMovies.push(movieTitle)
+        localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
+    } else {
+        const indexToRemove = favoriteMovies.indexOf(movieTitle)
+        if (indexToRemove !== -1) {
+            favoriteMovies.splice(indexToRemove, 1)
+            localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
+        }
+    }
+}
+
+/**
+ * Loads local storage if it exists
+ */
+const loadMovieFavorites = () => {
+    const retrieval = localStorage.getItem("favorites")
+
+    if (retrieval === null) {
+        favoriteMovies = []
+    } else {
+        favoriteMovies = JSON.parse(retrieval)
+    }
+}
+
 
 /**
  * Submit movie handler
@@ -266,3 +287,4 @@ $("#autocomplete").autocomplete({
 })
 
 createAutoFillListOfMovies()
+loadMovieFavorites()
