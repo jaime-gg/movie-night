@@ -50,20 +50,19 @@ const getRandomMovie = () => {
  * fetches information on the movie submited creates the movie card if a card is found
  * @param movie
  */
-var getMovieInformation = function(movie) {
+var getMovieInformation = function (movie) {
     var apiUrl = 'http://www.omdbapi.com/?apikey=301ca359&t=' + movie + '&plot=full';
     fetch(apiUrl)
-        .then(function(response) {
+        .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
                     if ("Error" in data) {
                         errorHandler("unable to find data for this movie")
-                    }else{
+                    } else {
                         displayMovieData(data);
                     }
                 });
-            }
-            else {
+            } else {
                 errorHandler("unable to find data for this movie")
             }
         });
@@ -173,6 +172,7 @@ const createMovieCard = (movieDetails) => {
     deleteButtonEl.appendTo(cardFooter)
     cardFooter.appendTo(cardEl)
 
+
     //Sets favorite icon depending on if the movie is already favorite on creation
     if (isMovieFavorited) {
         $(favoriteButton).addClass("fas fa-heart")
@@ -252,7 +252,7 @@ const loadMovieFavorites = () => {
 /**
  * Submit movie handler
  */
-$("#form").submit(function(event){
+$("#form").submit(function (event) {
     event.preventDefault();
     const input = $($(this)[0][0]).val().trim()
     getMovieInformation(input)
@@ -262,7 +262,7 @@ $("#form").submit(function(event){
 /**
  * Popular movie button handler
  */
-$("#popular").click(()=>{
+$("#popular").click(() => {
     getRandomMovie()
 })
 
@@ -270,14 +270,14 @@ $("#popular").click(()=>{
  * Handler for the autocomplete
  */
 $("#autocomplete").autocomplete({
-    source:(request,response)=>{
+    source: (request, response) => {
         let results = $.ui.autocomplete.filter(autoFillMovies, $("#autocomplete").val());
-        response(results.slice(0,10))
+        response(results.slice(0, 10))
     },
-    open:function(){
+    open: function () {
         $("ul.ui-menu").width($(this).innerWidth())
     },
-    minLength:0,
+    minLength: 0,
 
 })
 
