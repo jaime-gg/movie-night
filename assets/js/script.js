@@ -136,11 +136,6 @@ const createMovieCard = (movieDetails) => {
     cardHeaderTitle.appendTo(cardHeader)
     cardHeader.appendTo(cardEl)
 
-    //TODO This delete button location is temporary
-    //Card DeleteButton
-    const deleteButtonEl = $("<i class='card-header-title fas fa-trash'>")
-    deleteButtonEl.appendTo(cardHeader)
-
     //Card Poster
     const cardPosterEl = $("<div class='card-image'>")
     const cardPosterFigureEl = $("<figure class='image is-4by3'>")
