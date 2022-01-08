@@ -1,6 +1,5 @@
-
 const imdbApiKey = "k_bxw4k76r"
-    
+
 let favoriteMovies = [];
 
 let autoFillMovies = []
@@ -43,7 +42,7 @@ const createAutoFillListOfMovies = function () {
  * Creates a random movie from the array of 250 movies and displays the movie
  */
 const getRandomMovie = () => {
-    const index = Math.floor(Math.random()*data.items.length)
+    const index = Math.floor(Math.random() * autoFillMovies.length)
     getMovieInformation(autoFillMovies[index])
 }
 
@@ -51,21 +50,19 @@ const getRandomMovie = () => {
  * fetches information on the movie submited creates the movie card if a card is found
  * @param movie
  */
-var getMovieInformation = function(movie) {
+var getMovieInformation = function (movie) {
     var apiUrl = 'http://www.omdbapi.com/?apikey=301ca359&t=' + movie + '&plot=full';
     fetch(apiUrl)
-        .then(function(response) {
+        .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    console.log(data);
-                    if("Error" in data){
+                    if ("Error" in data) {
                         errorHandler("unable to find data for this movie")
-                    }else{
+                    } else {
                         displayMovieData(data);
                     }
                 });
-            }
-            else {
+            } else {
                 errorHandler("unable to find data for this movie")
             }
         });
@@ -88,13 +85,13 @@ var displayMovieData = function (movieInfo) {
         for (let ratingSource of ratingArray) {
             switch (ratingSource.Source) {
                 case "Internet Movie Database":
-                    ratings.imdb = `${eval(ratingSource.Value) * 100}%`
+                    ratings.imdb = `${Math.trunc(eval(ratingSource.Value) * 100)}%`
                     break;
                 case 'Rotten Tomatoes':
                     ratings.rottenTomatoes = ratingSource.Value
                     break;
                 case 'Metacritic':
-                    ratings.metaCritic = `${eval(ratingSource.Value) * 100}%`
+                    ratings.metaCritic = `${Math.trunc(eval(ratingSource.Value) * 100)}%`
                     break;
             }
         }
@@ -122,7 +119,7 @@ var displayMovieData = function (movieInfo) {
 const createMovieCard = (movieDetails) => {
 
     //TODO - write a function to check if this movie is in the favorites on creation
-    const isMovieFavorited = false
+    const isMovieFavorited = favoriteMovies.includes(movieDetails.movieTitle)
 
     //Create Column
     const column = $("<div class='column'>")
@@ -137,11 +134,6 @@ const createMovieCard = (movieDetails) => {
     cardHeaderTitle.text(movieDetails.movieTitle)
     cardHeaderTitle.appendTo(cardHeader)
     cardHeader.appendTo(cardEl)
-
-    //TODO This delete button location is temporary
-    //Card DeleteButton
-    const deleteButtonEl = $("<i class='card-header-title fas fa-trash'>")
-    deleteButtonEl.appendTo(cardHeader)
 
     //Card Poster
     const cardPosterEl = $("<div class='card-image'>")
@@ -174,9 +166,12 @@ const createMovieCard = (movieDetails) => {
     const cardFooter = $("<footer class='card-footer'>")
     const favoriteButton = $("<i class='card-footer-item'>")
     const moreButton = $("<i class='fas fa-angle-down card-footer-item'>")
+    const deleteButtonEl = $("<i class='card-footer-item fas fa-trash'>")
     favoriteButton.appendTo(cardFooter)
     moreButton.appendTo(cardFooter)
+    deleteButtonEl.appendTo(cardFooter)
     cardFooter.appendTo(cardEl)
+
 
     //Sets favorite icon depending on if the movie is already favorite on creation
     if (isMovieFavorited) {
@@ -207,23 +202,11 @@ const createMovieCard = (movieDetails) => {
         if (notFavorited) {
             favoriteButton.removeClass("far")
             favoriteButton.addClass("fas")
-            const favoritedItem = (this.closest('.card'))
-            favoritedTitle = favoritedItem.querySelector('.card-header-title').innerHTML;
-            if (!favoriteMovies.includes(favoritedTitle)) {
-                favoriteMovies.push(favoritedTitle)
-                localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
-            }
-
         } else {
             favoriteButton.removeClass("fas")
             favoriteButton.addClass("far")
-            for (var i = 0; i < favoriteMovies.length; i++) {
-                if (favoriteMovies[i] === favoritedTitle) {
-                    favoriteMovies.splice(i, 1);
-                    localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
-                }
-            }
         }
+        saveMovieHandler(movieDetails.movieTitle)
     })
 
     //Handler for deleting the card
@@ -235,9 +218,41 @@ const createMovieCard = (movieDetails) => {
 }
 
 /**
+ * Handles saving and removing movies
+ * @param movieTitle
+ */
+const saveMovieHandler = (movieTitle) => {
+    //if movie is not in favorite
+    if (!favoriteMovies.includes(movieTitle)) {
+        favoriteMovies.push(movieTitle)
+        localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
+    } else {
+        const indexToRemove = favoriteMovies.indexOf(movieTitle)
+        if (indexToRemove !== -1) {
+            favoriteMovies.splice(indexToRemove, 1)
+            localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
+        }
+    }
+}
+
+/**
+ * Loads local storage if it exists
+ */
+const loadMovieFavorites = () => {
+    const retrieval = localStorage.getItem("favorites")
+
+    if (retrieval === null) {
+        favoriteMovies = []
+    } else {
+        favoriteMovies = JSON.parse(retrieval)
+    }
+}
+
+
+/**
  * Submit movie handler
  */
-$("#form").submit(function(event){
+$("#form").submit(function (event) {
     event.preventDefault();
     const input = $($(this)[0][0]).val().trim()
     getMovieInformation(input)
@@ -247,7 +262,7 @@ $("#form").submit(function(event){
 /**
  * Popular movie button handler
  */
-$("#popular").click(()=>{
+$("#popular").click(() => {
     getRandomMovie()
 })
 
@@ -255,15 +270,16 @@ $("#popular").click(()=>{
  * Handler for the autocomplete
  */
 $("#autocomplete").autocomplete({
-    source:(request,response)=>{
+    source: (request, response) => {
         let results = $.ui.autocomplete.filter(autoFillMovies, $("#autocomplete").val());
-        response(results.slice(0,10))
+        response(results.slice(0, 10))
     },
-    open:function(){
-      $("ul.ui-menu").width($(this).innerWidth())
+    open: function () {
+        $("ul.ui-menu").width($(this).innerWidth())
     },
-    minLength:0,
+    minLength: 0,
 
 })
 
 createAutoFillListOfMovies()
+loadMovieFavorites()

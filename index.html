@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,28 +33,28 @@
                     <div id="navbarMenu" class="navbar-menu">
                         <div class="navbar-end">
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="#">
+                                <button class="button is-white is-outlined">
                                     <span class="icon"><i class="fas fa-trash-alt"></i></span>
                                     <span>Clear Page</span>
-                                </a>
+                                </button>
                             </span>
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="#">
+                                <button class="button is-white is-outlined">
                                     <span class="icon"><i class="fas fa-heart"></i></span>
                                     <span>Faviorites</span>
-                                </a>
+                                </button>
                             </span>
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="#">
+                                <button class="button is-white is-outlined">
                                     <span class="icon"><i class="fas fa-history"></i></span>
                                     <span>History</span>
-                                </a>
+                                </button>
                             </span>
                             <span class="navbar-item">
-                                <a class="button is-white is-outlined" href="#">
+                                <button class="button is-white is-outlined" id="popular">
                                     <span class="icon"><i class="fas fa-crown"></i></span>
                                     <span>Popular</span>
-                                </a>
+                                </button>
                             </span>
                         </div>
                     </div>
@@ -71,9 +72,9 @@
 
                     <form class="field is-grouped" id="form">
                         <p class="control is-expanded">
-                            <label for="autocomplete"/>
+                            <label for="autocomplete">
                                 <input class="input" type="text" placeholder="What Are We Watching?" id="autocomplete">
-
+                            </label>
                         </p>
                         <p class="control">
                             <button class="button is-danger">
