@@ -5,6 +5,8 @@ let favoriteMovies = [];
 let autoFillMovies = []
 
 const favoritesButton = document.querySelector('#favorites-button')
+let favoritesModal = document.querySelector('#favorites-modal')
+
 
 
 /**
@@ -281,15 +283,15 @@ $("#autocomplete").autocomplete({
         $("ul.ui-menu").width($(this).innerWidth())
     },
     minLength: 0,
-
+    
 })
 
-var displayFavorites = function() {
-    alert('these are the favorites' + favoriteMovies);
+const displayFavorites = function() {
+    favoritesModal.classList.add('is-active')
 }
-
 /* "favorites" button handler */
 favoritesButton.addEventListener('click', displayFavorites)
+
 
 createAutoFillListOfMovies()
 

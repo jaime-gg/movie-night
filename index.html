@@ -39,7 +39,7 @@
                                 </button>
                             </span>
                             <span class="navbar-item">
-                                <button class="button is-white is-outlined" id="favorites-button">
+                                <button class="button is-white is-outlined js-modal-trigger" id="favorites-button" data-target="favorites-modal">
                                     <span class="icon"><i class="fas fa-heart"></i></span>
                                     <span>Faviorites</span>
                                 </button>
@@ -97,6 +97,23 @@
             </div>
           </footer>
     </section>
+
+    <div class="modal" id="favorites-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">My Favorites</p>
+            <button class="delete" aria-label="close"></button>
+          </header>
+          <section class="modal-card-body">
+            <!-- Content ... -->
+          </section>
+          <footer class="modal-card-foot">
+            <!-- <button class="button is-success">Save changes</button>
+            <button class="button">Cancel</button> -->
+          </footer>
+        </div>
+      </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
