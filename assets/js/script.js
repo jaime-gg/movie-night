@@ -6,6 +6,8 @@ let autoFillMovies = []
 
 const favoritesButton = document.querySelector('#favorites-button')
 let favoritesModal = document.querySelector('#favorites-modal')
+const historyButton = document.querySelector('#history-button')
+let historyModal = document.querySelector('#history-modal')
 
 
 
@@ -300,6 +302,21 @@ let closeFavorites = function () {
 }
 /* "favorites" button handler */
 favoritesButton.addEventListener('click', displayFavorites)
+
+const displayHistory = function() {
+    historyModal.classList.add('is-active')
+    let modalBackground = historyModal.querySelector('.modal-background')
+    let modalClose = historyModal.querySelector('.delete')
+    modalBackground.addEventListener('click', closeHistory)
+    modalClose.addEventListener('click', closeHistory)
+}
+
+let closeHistory = function () {
+    console.log('close!')
+    historyModal.classList.toggle('is-active')
+}
+/* "favorites" button handler */
+historyButton.addEventListener('click', displayHistory)
 
 
 createAutoFillListOfMovies()

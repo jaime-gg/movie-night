@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
     <title>Movie Night</title>
 </head>
+
 <body>
     <section class="hero is-info is-fullheight">
         <div class="hero-head">
@@ -24,7 +26,8 @@
                         </a>
 
                         <!-- converts menu to 'burger' nav when on mobile -->
-                        <div class="navbar-burger burger" onclick="document.querySelector('.navbar-menu').classList.toggle('is-active'); document.querySelector('.navbar-burger').classList.toggle('is-active');">
+                        <div class="navbar-burger burger"
+                            onclick="document.querySelector('.navbar-menu').classList.toggle('is-active'); document.querySelector('.navbar-burger').classList.toggle('is-active');">
                             <span></span>
                             <span></span>
                             <span></span>
@@ -39,13 +42,13 @@
                                 </button>
                             </span>
                             <span class="navbar-item">
-                                <button class="button is-white is-outlined js-modal-trigger" id="favorites-button" data-target="favorites-modal">
+                                <button class="button is-white is-outlined" id="favorites-button">
                                     <span class="icon"><i class="fas fa-heart"></i></span>
                                     <span>Faviorites</span>
                                 </button>
                             </span>
                             <span class="navbar-item">
-                                <button class="button is-white is-outlined">
+                                <button class="button is-white is-outlined" id="history-button">
                                     <span class="icon"><i class="fas fa-history"></i></span>
                                     <span>History</span>
                                 </button>
@@ -82,7 +85,7 @@
                             </button>
                         </p>
                     </form>
-                <div id="error-handler"></div>
+                    <div id="error-handler"></div>
                 </div>
                 <!-- add cards with movie info here -->
                 <div class="columns is-multiline" id="Search-Cards"></div>
@@ -91,32 +94,46 @@
 
         <footer class="our-footer">
             <div class="content has-text-centered">
-              <p>
-                <strong>MOVIE NIGHT</strong> by <a href="https://github.com/DaniDelia253">Dani Davis</a>, <a href="https://github.com/jaime-gg">Jaime Gallegos Garcia</a>, and <a href="https://github.com/moonryc">Ryan Moon</a>,
-              </p>
+                <p>
+                    <strong>MOVIE NIGHT</strong> by <a href="https://github.com/DaniDelia253">Dani Davis</a>, <a
+                        href="https://github.com/jaime-gg">Jaime Gallegos Garcia</a>, and <a
+                        href="https://github.com/moonryc">Ryan Moon</a>,
+                </p>
             </div>
-          </footer>
+        </footer>
     </section>
 
     <div class="modal" id="favorites-modal">
         <div class="modal-background"></div>
         <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">My Favorites</p>
-            <button class="delete" aria-label="close"></button>
-          </header>
-          <section class="modal-card-body">
-            <!-- Content ... -->
-          </section>
-          <footer class="modal-card-foot">
-            <!-- <button class="button is-success">Save changes</button>
-            <button class="button">Cancel</button> -->
-          </footer>
+            <header class="modal-card-head">
+                <p class="modal-card-title">My Favorites</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <!-- Content ... -->
+            </section>
+            <footer class="modal-card-foot"></footer>
         </div>
-      </div>
+    </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-<script src="./assets/js/script.js"></script>
+    <div class="modal" id="history-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">History</p>
+                <button class="delete" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <!-- Content ... -->
+            </section>
+            <footer class="modal-card-foot"></footer>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
+
 </html>
