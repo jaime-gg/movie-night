@@ -294,14 +294,80 @@ const displayFavorites = function() {
     let modalClose = favoritesModal.querySelector('.delete')
     modalBackground.addEventListener('click', closeFavorites)
     modalClose.addEventListener('click', closeFavorites)
+
+
+
+
+
+
+const favoriteMovieEl = document.createElement('div')
+favoriteMovieEl.classList = 'box'
+const favoriteMovieContainerEl = document.createElement('article')
+favoriteMovieContainerEl.classList = 'media'
+const favoriteMoviePosterEl = document.createElement('div')
+favoriteMoviePosterEl.classList = 'media-left'
+const favoriteMoviePosterContainerEl = document.createElement('figure')
+favoriteMoviePosterContainerEl.classList = 'image is-64x64'
+const favoriteMoviePosterImageEl = document.createElement('img')
+favoriteMoviePosterImageEl.src = "https://bulma.io/images/placeholders/128x128.png"
+/* ***** CHANGE THIS TO MOVIE NAME = POSTER!!!*/
+favoriteMoviePosterImageEl.alt = "Movie Poster"
+const favoriteMovieInfoEl = document.createElement('div')
+favoriteMovieInfoEl.classList = 'media-content'
+const favoriteMovieTitleEl = document.createElement('p')
+favoriteMovieTitleEl.classList = 'card-header-title'
+favoriteMovieTitleEl.textContent = 'title'
+const favoriteMovieDescriptionEl = document.createElement('div')
+favoriteMovieDescriptionEl.classList = 'content'
+favoriteMovieDescriptionEl.textContent = 'description'
+const favoriteMovieHeartIconNavEl = document.createElement('nav')
+favoriteMovieHeartIconNavEl.classList = 'level'
+const favoriteMovieIconContainerEl = document.createElement('div')
+favoriteMovieIconContainerEl.classList = 'level-left'
+const favoriteMovieIconLinkEl = document.createElement('a')
+favoriteMovieIconLinkEl.classList = 'level-item'
+const favoriteMovieIconEl = document.createElement('span')
+favoriteMovieIconEl.classList = 'icon is-small'
+const favoriteMovieHeartEl = document.createElement('i')
+favoriteMovieHeartEl.classList = 'fas fa-heart'
+
+
+
+const favoritesModalEl = document.querySelector('#favorites-content')
+favoritesModalEl.appendChild(favoriteMovieEl)
+favoriteMovieEl.appendChild(favoriteMovieContainerEl)
+favoriteMovieContainerEl.appendChild(favoriteMoviePosterEl)
+favoriteMoviePosterEl.appendChild(favoriteMoviePosterContainerEl)
+favoriteMoviePosterContainerEl.appendChild(favoriteMoviePosterImageEl)
+favoriteMovieContainerEl.appendChild(favoriteMovieInfoEl)
+favoriteMovieInfoEl.appendChild(favoriteMovieTitleEl)
+favoriteMovieInfoEl.appendChild(favoriteMovieDescriptionEl)
+favoriteMovieInfoEl.appendChild(favoriteMovieHeartIconNavEl)
+favoriteMovieHeartIconNavEl.appendChild(favoriteMovieIconContainerEl)
+favoriteMovieIconContainerEl.appendChild(favoriteMovieIconLinkEl)
+favoriteMovieIconLinkEl.appendChild(favoriteMovieIconEl)
+favoriteMovieIconEl.appendChild(favoriteMovieHeartEl)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 let closeFavorites = function () {
     console.log('close!')
     favoritesModal.classList.toggle('is-active')
 }
-/* "favorites" button handler */
-favoritesButton.addEventListener('click', displayFavorites)
 
 const displayHistory = function() {
     historyModal.classList.add('is-active')
@@ -316,6 +382,8 @@ let closeHistory = function () {
     historyModal.classList.toggle('is-active')
 }
 /* "favorites" button handler */
+favoritesButton.addEventListener('click', displayFavorites)
+/* "history" button handler */
 historyButton.addEventListener('click', displayHistory)
 
 
