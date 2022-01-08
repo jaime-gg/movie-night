@@ -4,6 +4,8 @@ let favoriteMovies = [];
 
 let autoFillMovies = []
 
+const favoritesButton = document.querySelector('#favorites-button')
+
 
 /**
  * Displays error text and removes error text after 10 seconds
@@ -281,6 +283,13 @@ $("#autocomplete").autocomplete({
     minLength: 0,
 
 })
+
+var displayFavorites = function() {
+    alert('these are the favorites' + favoriteMovies);
+}
+
+/* "favorites" button handler */
+favoritesButton.addEventListener('click', displayFavorites)
 
 createAutoFillListOfMovies()
 
