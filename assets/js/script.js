@@ -4,6 +4,7 @@ let favoriteMovies = [];
 
 let autoFillMovies = []
 
+
 /**
  * Displays error text and removes error text after 10 seconds
  * @param errorMessage
@@ -283,4 +284,4 @@ $("#autocomplete").autocomplete({
 
 createAutoFillListOfMovies()
 
-loadFavoriteMovies()
+loadMovieFavorites();
