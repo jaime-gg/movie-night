@@ -4,6 +4,8 @@ let favoriteMovies = [];
 
 let autoFillMovies = []
 
+let displayedMovies = []
+
 const favoritesButton = document.querySelector('#favorites-button')
 let favoritesModal = document.querySelector('#favorites-modal')
 const historyButton = document.querySelector('#history-button')
@@ -125,7 +127,13 @@ var displayMovieData = function (movieInfo) {
  */
 const createMovieCard = (movieDetails) => {
 
-    //TODO - write a function to check if this movie is in the favorites on creation
+    if(displayedMovies.includes(movieDetails.movieTitle)){
+        errorHandler("Movie is currently being displayed")
+        return;
+    }else{
+        displayedMovies.push(movieDetails.movieTitle)
+    }
+
     const isMovieFavorited = favoriteMovies.includes(movieDetails.movieTitle)
 
     //Create Column
@@ -219,6 +227,8 @@ const createMovieCard = (movieDetails) => {
     //Handler for deleting the card
     $(deleteButtonEl).click(function () {
         column.remove()
+        let indexOfMovie = displayedMovies.indexOf(movieDetails.movieTitle)
+        displayedMovies.splice(indexOfMovie,1)
     })
 
     $("#Search-Cards").append(column)
