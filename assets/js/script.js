@@ -21,10 +21,10 @@ const errorHandler = (errorMessage) => {
 
     $("#error-handler").append(errorEl)
 
-    const deleteError = setInterval(()=>{
+    const deleteError = setInterval(() => {
         $(errorEl).remove()
         clearInterval(deleteError)
-    },10*1000)
+    }, 10 * 1000)
 
 }
 
@@ -39,7 +39,7 @@ const createAutoFillListOfMovies = function () {
                     autoFillMovies.push(movie.title)
                 }
             })
-        }else{
+        } else {
             errorHandler("Cannot get info from IMDB")
         }
     })
@@ -285,68 +285,74 @@ $("#autocomplete").autocomplete({
         $("ul.ui-menu").width($(this).innerWidth())
     },
     minLength: 0,
-    
+
 })
 
-const displayFavorites = function() {
+const displayFavorites = function () {
     favoritesModal.classList.add('is-active')
     let modalBackground = favoritesModal.querySelector('.modal-background')
     let modalClose = favoritesModal.querySelector('.delete')
     modalBackground.addEventListener('click', closeFavorites)
     modalClose.addEventListener('click', closeFavorites)
 
+    if (favoriteMovies.length === 0) {
+        const favoritesModalEl = document.querySelector('#favorites-content')
+        favoritesModalEl.textContent = 'You have not picked any favorite movies yet!'
+
+    }
+    else {
+        for (var i = 0; i < favoriteMovies.length; i++) {
+
+            const favoriteMovieEl = document.createElement('div')
+            favoriteMovieEl.classList = 'box'
+            const favoriteMovieContainerEl = document.createElement('article')
+            favoriteMovieContainerEl.classList = 'media'
+            const favoriteMoviePosterEl = document.createElement('div')
+            favoriteMoviePosterEl.classList = 'media-left'
+            const favoriteMoviePosterContainerEl = document.createElement('figure')
+            favoriteMoviePosterContainerEl.classList = 'image is-64x64'
+            const favoriteMoviePosterImageEl = document.createElement('img')
+            favoriteMoviePosterImageEl.src = "https://bulma.io/images/placeholders/128x128.png"
+            /* ***** CHANGE THIS TO MOVIE NAME = POSTER!!!*/
+            favoriteMoviePosterImageEl.alt = "Movie Poster"
+            const favoriteMovieInfoEl = document.createElement('div')
+            favoriteMovieInfoEl.classList = 'media-content'
+            const favoriteMovieTitleEl = document.createElement('p')
+            favoriteMovieTitleEl.classList = 'card-header-title'
+            favoriteMovieTitleEl.textContent = 'title'
+            const favoriteMovieDescriptionEl = document.createElement('div')
+            favoriteMovieDescriptionEl.classList = 'content'
+            favoriteMovieDescriptionEl.textContent = 'description'
+            const favoriteMovieHeartIconNavEl = document.createElement('nav')
+            favoriteMovieHeartIconNavEl.classList = 'level'
+            const favoriteMovieIconContainerEl = document.createElement('div')
+            favoriteMovieIconContainerEl.classList = 'level-left'
+            const favoriteMovieIconLinkEl = document.createElement('a')
+            favoriteMovieIconLinkEl.classList = 'level-item'
+            const favoriteMovieIconEl = document.createElement('span')
+            favoriteMovieIconEl.classList = 'icon is-small'
+            const favoriteMovieHeartEl = document.createElement('i')
+            favoriteMovieHeartEl.classList = 'fas fa-heart'
+
+            const favoritesModalEl = document.querySelector('#favorites-content')
+            favoritesModalEl.appendChild(favoriteMovieEl)
+            favoriteMovieEl.appendChild(favoriteMovieContainerEl)
+            favoriteMovieContainerEl.appendChild(favoriteMoviePosterEl)
+            favoriteMoviePosterEl.appendChild(favoriteMoviePosterContainerEl)
+            favoriteMoviePosterContainerEl.appendChild(favoriteMoviePosterImageEl)
+            favoriteMovieContainerEl.appendChild(favoriteMovieInfoEl)
+            favoriteMovieInfoEl.appendChild(favoriteMovieTitleEl)
+            favoriteMovieInfoEl.appendChild(favoriteMovieDescriptionEl)
+            favoriteMovieInfoEl.appendChild(favoriteMovieHeartIconNavEl)
+            favoriteMovieHeartIconNavEl.appendChild(favoriteMovieIconContainerEl)
+            favoriteMovieIconContainerEl.appendChild(favoriteMovieIconLinkEl)
+            favoriteMovieIconLinkEl.appendChild(favoriteMovieIconEl)
+            favoriteMovieIconEl.appendChild(favoriteMovieHeartEl)
+        }
+    }
 
 
 
-
-
-const favoriteMovieEl = document.createElement('div')
-favoriteMovieEl.classList = 'box'
-const favoriteMovieContainerEl = document.createElement('article')
-favoriteMovieContainerEl.classList = 'media'
-const favoriteMoviePosterEl = document.createElement('div')
-favoriteMoviePosterEl.classList = 'media-left'
-const favoriteMoviePosterContainerEl = document.createElement('figure')
-favoriteMoviePosterContainerEl.classList = 'image is-64x64'
-const favoriteMoviePosterImageEl = document.createElement('img')
-favoriteMoviePosterImageEl.src = "https://bulma.io/images/placeholders/128x128.png"
-/* ***** CHANGE THIS TO MOVIE NAME = POSTER!!!*/
-favoriteMoviePosterImageEl.alt = "Movie Poster"
-const favoriteMovieInfoEl = document.createElement('div')
-favoriteMovieInfoEl.classList = 'media-content'
-const favoriteMovieTitleEl = document.createElement('p')
-favoriteMovieTitleEl.classList = 'card-header-title'
-favoriteMovieTitleEl.textContent = 'title'
-const favoriteMovieDescriptionEl = document.createElement('div')
-favoriteMovieDescriptionEl.classList = 'content'
-favoriteMovieDescriptionEl.textContent = 'description'
-const favoriteMovieHeartIconNavEl = document.createElement('nav')
-favoriteMovieHeartIconNavEl.classList = 'level'
-const favoriteMovieIconContainerEl = document.createElement('div')
-favoriteMovieIconContainerEl.classList = 'level-left'
-const favoriteMovieIconLinkEl = document.createElement('a')
-favoriteMovieIconLinkEl.classList = 'level-item'
-const favoriteMovieIconEl = document.createElement('span')
-favoriteMovieIconEl.classList = 'icon is-small'
-const favoriteMovieHeartEl = document.createElement('i')
-favoriteMovieHeartEl.classList = 'fas fa-heart'
-
-
-
-const favoritesModalEl = document.querySelector('#favorites-content')
-favoritesModalEl.appendChild(favoriteMovieEl)
-favoriteMovieEl.appendChild(favoriteMovieContainerEl)
-favoriteMovieContainerEl.appendChild(favoriteMoviePosterEl)
-favoriteMoviePosterEl.appendChild(favoriteMoviePosterContainerEl)
-favoriteMoviePosterContainerEl.appendChild(favoriteMoviePosterImageEl)
-favoriteMovieContainerEl.appendChild(favoriteMovieInfoEl)
-favoriteMovieInfoEl.appendChild(favoriteMovieTitleEl)
-favoriteMovieInfoEl.appendChild(favoriteMovieDescriptionEl)
-favoriteMovieInfoEl.appendChild(favoriteMovieHeartIconNavEl)
-favoriteMovieHeartIconNavEl.appendChild(favoriteMovieIconContainerEl)
-favoriteMovieIconContainerEl.appendChild(favoriteMovieIconLinkEl)
-favoriteMovieIconLinkEl.appendChild(favoriteMovieIconEl)
-favoriteMovieIconEl.appendChild(favoriteMovieHeartEl)
 
 
 
@@ -365,11 +371,10 @@ favoriteMovieIconEl.appendChild(favoriteMovieHeartEl)
 }
 
 let closeFavorites = function () {
-    console.log('close!')
     favoritesModal.classList.toggle('is-active')
 }
 
-const displayHistory = function() {
+const displayHistory = function () {
     historyModal.classList.add('is-active')
     let modalBackground = historyModal.querySelector('.modal-background')
     let modalClose = historyModal.querySelector('.delete')
@@ -378,7 +383,6 @@ const displayHistory = function() {
 }
 
 let closeHistory = function () {
-    console.log('close!')
     historyModal.classList.toggle('is-active')
 }
 /* "favorites" button handler */
