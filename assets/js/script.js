@@ -266,3 +266,5 @@ $("#autocomplete").autocomplete({
 })
 
 createAutoFillListOfMovies()
+
+loadFavoriteMovies()
