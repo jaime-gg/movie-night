@@ -288,6 +288,15 @@ $("#autocomplete").autocomplete({
 
 const displayFavorites = function() {
     favoritesModal.classList.add('is-active')
+    let modalBackground = favoritesModal.querySelector('.modal-background')
+    let modalClose = favoritesModal.querySelector('.delete')
+    modalBackground.addEventListener('click', closeFavorites)
+    modalClose.addEventListener('click', closeFavorites)
+}
+
+let closeFavorites = function () {
+    console.log('close!')
+    favoritesModal.classList.toggle('is-active')
 }
 /* "favorites" button handler */
 favoritesButton.addEventListener('click', displayFavorites)
