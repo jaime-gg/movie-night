@@ -53,3 +53,8 @@ p > a {
     border-left: black 2px solid;
     border-right: black 2px solid;
 }
+
+@media screen and (max-width: 1023px){
+.hero.is-info .navbar-menu {
+    background-color: var(--primary);
+}}
