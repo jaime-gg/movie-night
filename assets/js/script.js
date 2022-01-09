@@ -130,7 +130,7 @@ var saveSearchedMovie = function (movieDetails) {
         localStorage.setItem('movieSearches', JSON.stringify(searchHistory))
     }
     else {
-        for (var i = 0; i<searchHistory.length; i++) {
+        for (var i = 0; i < searchHistory.length; i++) {
             if (movieDetails.movieTitle === searchHistory[i].movieTitle) {
                 return
             }
@@ -151,10 +151,10 @@ var saveSearchedMovie = function (movieDetails) {
  */
 const createMovieCard = (movieDetails) => {
 
-    if(displayedMovies.includes(movieDetails.movieTitle)){
+    if (displayedMovies.includes(movieDetails.movieTitle)) {
         errorHandler("Movie is currently being displayed")
         return;
-    }else{
+    } else {
         displayedMovies.push(movieDetails.movieTitle)
     }
 
@@ -252,7 +252,7 @@ const createMovieCard = (movieDetails) => {
     $(deleteButtonEl).click(function () {
         column.remove()
         let indexOfMovie = displayedMovies.indexOf(movieDetails.movieTitle)
-        displayedMovies.splice(indexOfMovie,1)
+        displayedMovies.splice(indexOfMovie, 1)
     })
 
     $("#Search-Cards").append(column)
@@ -289,7 +289,7 @@ const loadMovieFavorites = () => {
     }
 }
 
-const loadSearchHistory = function() {
+const loadSearchHistory = function () {
     if (localStorage.getItem('movieSearches')) {
         searchHistory = JSON.parse(localStorage.getItem('movieSearches'))
     } else {
@@ -347,7 +347,7 @@ const displayFavorites = function () {
     else {
         for (var i = 0; i < favoriteMovies.length; i++) {
 
-            let isMovie = function(movie) {
+            let isMovie = function (movie) {
                 return movie.movieTitle === favoriteMovies[i]
             }
             let favoriteMovieObj = searchHistory.find(isMovie)
