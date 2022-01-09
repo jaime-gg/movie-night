@@ -351,7 +351,7 @@ const displayFavorites = function () {
         while (favoritesModalEl.firstChild) {
             favoritesModalEl.removeChild(favoritesModalEl.firstChild);
         }
-    
+
         for (var i = 0; i < favoriteMovies.length; i++) {
 
             let isMovie = function (movie) {
@@ -403,7 +403,7 @@ const displayFavorites = function () {
             favoriteMovieIconLinkEl.appendChild(favoriteMovieIconEl)
             favoriteMovieIconEl.appendChild(favoriteMovieHeartEl)
 
-            favoriteMovieIconContainerEl.addEventListener('click', function() {
+            favoriteMovieIconContainerEl.addEventListener('click', function () {
                 favoriteMovieHeartEl.classList.remove("fas")
                 favoriteMovieHeartEl.classList.add("far")
                 saveMovieHandler(favoriteMovieObj.movieTitle)
@@ -419,6 +419,7 @@ let closeFavorites = function () {
 
 const displayHistory = function () {
     loadSearchHistory()
+    loadMovieFavorites()
 
     historyModal.classList.add('is-active')
     let modalBackground = historyModal.querySelector('.modal-background')
@@ -440,11 +441,6 @@ const displayHistory = function () {
         }
 
         for (var i = 0; i < searchHistory.length; i++) {
-
-
-
-
-
 
             const historyMovieEl = document.createElement('div')
             historyMovieEl.classList = 'box'
@@ -478,7 +474,8 @@ const displayHistory = function () {
             if (favoriteMovies.indexOf(searchHistory[i].movieTitle) !== -1) {
                 historyMovieHeartEl.classList = 'fas fa-heart'
             } else {
-                historyMovieHeartEl.classList = 'far fa-heart'}
+                historyMovieHeartEl.classList = 'far fa-heart'
+            }
 
             historyModalEl.appendChild(historyMovieEl)
             historyMovieEl.appendChild(historyMovieContainerEl)
@@ -494,9 +491,26 @@ const displayHistory = function () {
             historyMovieIconLinkEl.appendChild(historyMovieIconEl)
             historyMovieIconEl.appendChild(historyMovieHeartEl)
 
-            }
+            historyMovieIconContainerEl.addEventListener('click', function () {
 
+                historyMovieHeartEl.classList.toggle("fas")
+                historyMovieHeartEl.classList.toggle("far")
+                let newClass = historyMovieHeartEl.getAttribute('class')
+                let movieName = historyMovieTitleEl.textContent
+                console.log(movieName)
+                if (newClass === 'fa-heart fas') {
+                    favoriteMovies.push(movieName)
+                    localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
+                } else {
+                    const indexToRemove = favoriteMovies.indexOf(movieName)
+                    if (indexToRemove !== -1) {
+                        favoriteMovies.splice(indexToRemove, 1)
+                        localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
+                    }
+                }
+            })
         }
+    }
 }
 
 
