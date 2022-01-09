@@ -6,6 +6,8 @@ let autoFillMovies = []
 
 let displayedMovies = []
 
+let searchHistory = []
+
 const favoritesButton = document.querySelector('#favorites-button')
 let favoritesModal = document.querySelector('#favorites-modal')
 const historyButton = document.querySelector('#history-button')
@@ -117,8 +119,37 @@ var displayMovieData = function (movieInfo) {
         whereToView: ""
     }
 
+    saveSearchedMovie(movieDetails)
     createMovieCard(movieDetails)
 
+}
+
+var saveSearchedMovie = function (movieDetails) {
+    console.log(searchHistory)
+    if (searchHistory.length === 0) {
+        console.log('not yet searched')
+        searchHistory.push(movieDetails)
+        localStorage.setItem('movieSearches', JSON.stringify(searchHistory))
+        console.log('movie details updated')
+    }
+    else {
+        for (var i = 0; i<searchHistory.length; i++) {
+            if (movieDetails.movieTitle === searchHistory[i].movieTitle) {
+                console.log('found!!!')
+                return
+            }
+            else {
+                console.log('not found!!!')
+                var movieNotSearchedYet = true
+            }
+        }
+    }
+    if (movieNotSearchedYet === true) {
+        console.log('not yet searched')
+        searchHistory.push(movieDetails)
+        localStorage.setItem('movieSearches', JSON.stringify(searchHistory))
+        console.log('movie details updated')
+    }
 }
 
 /**
@@ -265,6 +296,17 @@ const loadMovieFavorites = () => {
     }
 }
 
+const loadSearchHistory = function() {
+    if (localStorage.getItem('movieSearches')) {
+        searchHistory = JSON.parse(localStorage.getItem('movieSearches'))
+        console.log('search history set')
+    } else {
+        searchHistory = []
+        console.log('search history set blank')
+
+    }
+}
+
 
 /**
  * Submit movie handler
@@ -299,6 +341,7 @@ $("#autocomplete").autocomplete({
 })
 
 const displayFavorites = function () {
+
     favoritesModal.classList.add('is-active')
     let modalBackground = favoritesModal.querySelector('.modal-background')
     let modalClose = favoritesModal.querySelector('.delete')
@@ -313,6 +356,12 @@ const displayFavorites = function () {
     else {
         for (var i = 0; i < favoriteMovies.length; i++) {
 
+            let isMovie = function(movie) {
+                return movie.movieTitle === favoriteMovies[i]
+            }
+            let favoriteMovieObj = searchHistory.find(isMovie)
+            console.log(favoriteMovieObj)
+
             const favoriteMovieEl = document.createElement('div')
             favoriteMovieEl.classList = 'box'
             const favoriteMovieContainerEl = document.createElement('article')
@@ -322,17 +371,16 @@ const displayFavorites = function () {
             const favoriteMoviePosterContainerEl = document.createElement('figure')
             favoriteMoviePosterContainerEl.classList = 'image is-64x64'
             const favoriteMoviePosterImageEl = document.createElement('img')
-            favoriteMoviePosterImageEl.src = "https://bulma.io/images/placeholders/128x128.png"
-            /* ***** CHANGE THIS TO MOVIE NAME = POSTER!!!*/
-            favoriteMoviePosterImageEl.alt = "Movie Poster"
+            favoriteMoviePosterImageEl.src = favoriteMovieObj.moviePoster
+            favoriteMoviePosterImageEl.alt = favoriteMovieObj.movieTitle + " Poster"
             const favoriteMovieInfoEl = document.createElement('div')
             favoriteMovieInfoEl.classList = 'media-content'
             const favoriteMovieTitleEl = document.createElement('p')
             favoriteMovieTitleEl.classList = 'card-header-title'
-            favoriteMovieTitleEl.textContent = 'title'
+            favoriteMovieTitleEl.textContent = favoriteMovieObj.movieTitle
             const favoriteMovieDescriptionEl = document.createElement('div')
             favoriteMovieDescriptionEl.classList = 'content'
-            favoriteMovieDescriptionEl.textContent = 'description'
+            favoriteMovieDescriptionEl.textContent = favoriteMovieObj.moviePlot
             const favoriteMovieHeartIconNavEl = document.createElement('nav')
             favoriteMovieHeartIconNavEl.classList = 'level'
             const favoriteMovieIconContainerEl = document.createElement('div')
@@ -360,24 +408,6 @@ const displayFavorites = function () {
             favoriteMovieIconEl.appendChild(favoriteMovieHeartEl)
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 let closeFavorites = function () {
@@ -403,4 +433,5 @@ historyButton.addEventListener('click', displayHistory)
 
 createAutoFillListOfMovies()
 
-loadMovieFavorites();
+loadMovieFavorites()
+loadSearchHistory()
