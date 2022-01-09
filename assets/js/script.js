@@ -420,8 +420,6 @@ let closeFavorites = function () {
 const displayHistory = function () {
     loadSearchHistory()
 
-    console.log()
-
     historyModal.classList.add('is-active')
     let modalBackground = historyModal.querySelector('.modal-background')
     let modalClose = historyModal.querySelector('#close-button')
@@ -476,7 +474,11 @@ const displayHistory = function () {
             const historyMovieIconEl = document.createElement('span')
             historyMovieIconEl.classList = 'icon is-small'
             const historyMovieHeartEl = document.createElement('i')
-            historyMovieHeartEl.classList = 'fas fa-heart'
+
+            if (favoriteMovies.indexOf(searchHistory[i].movieTitle) !== -1) {
+                historyMovieHeartEl.classList = 'fas fa-heart'
+            } else {
+                historyMovieHeartEl.classList = 'far fa-heart'}
 
             historyModalEl.appendChild(historyMovieEl)
             historyMovieEl.appendChild(historyMovieContainerEl)
