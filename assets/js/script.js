@@ -125,30 +125,23 @@ var displayMovieData = function (movieInfo) {
 }
 
 var saveSearchedMovie = function (movieDetails) {
-    console.log(searchHistory)
     if (searchHistory.length === 0) {
-        console.log('not yet searched')
         searchHistory.push(movieDetails)
         localStorage.setItem('movieSearches', JSON.stringify(searchHistory))
-        console.log('movie details updated')
     }
     else {
         for (var i = 0; i<searchHistory.length; i++) {
             if (movieDetails.movieTitle === searchHistory[i].movieTitle) {
-                console.log('found!!!')
                 return
             }
             else {
-                console.log('not found!!!')
                 var movieNotSearchedYet = true
             }
         }
     }
     if (movieNotSearchedYet === true) {
-        console.log('not yet searched')
         searchHistory.push(movieDetails)
         localStorage.setItem('movieSearches', JSON.stringify(searchHistory))
-        console.log('movie details updated')
     }
 }
 
@@ -299,10 +292,8 @@ const loadMovieFavorites = () => {
 const loadSearchHistory = function() {
     if (localStorage.getItem('movieSearches')) {
         searchHistory = JSON.parse(localStorage.getItem('movieSearches'))
-        console.log('search history set')
     } else {
         searchHistory = []
-        console.log('search history set blank')
 
     }
 }
@@ -360,7 +351,6 @@ const displayFavorites = function () {
                 return movie.movieTitle === favoriteMovies[i]
             }
             let favoriteMovieObj = searchHistory.find(isMovie)
-            console.log(favoriteMovieObj)
 
             const favoriteMovieEl = document.createElement('div')
             favoriteMovieEl.classList = 'box'
