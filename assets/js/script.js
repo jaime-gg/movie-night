@@ -418,12 +418,85 @@ let closeFavorites = function () {
 }
 
 const displayHistory = function () {
+    loadSearchHistory()
+
+    console.log()
+
     historyModal.classList.add('is-active')
     let modalBackground = historyModal.querySelector('.modal-background')
-    let modalClose = historyModal.querySelector('.delete')
+    let modalClose = historyModal.querySelector('#close-button')
+    let modalDelete = historyModal.querySelector('.delete')
     modalBackground.addEventListener('click', closeHistory)
     modalClose.addEventListener('click', closeHistory)
+    modalDelete.addEventListener('click', closeHistory)
+
+
+    if (searchHistory.length === 0) {
+        const historyModalEl = document.querySelector('#history-content')
+        historyModalEl.textContent = 'You have not searched for any movies yet!'
+    }
+    else {
+        const historyModalEl = document.querySelector('#history-content')
+        while (historyModalEl.firstChild) {
+            historyModalEl.removeChild(historyModalEl.firstChild);
+        }
+
+        for (var i = 0; i < searchHistory.length; i++) {
+
+
+
+
+
+
+            const historyMovieEl = document.createElement('div')
+            historyMovieEl.classList = 'box'
+            const historyMovieContainerEl = document.createElement('article')
+            historyMovieContainerEl.classList = 'media'
+            const historyMoviePosterEl = document.createElement('div')
+            historyMoviePosterEl.classList = 'media-left'
+            const historyMoviePosterContainerEl = document.createElement('figure')
+            historyMoviePosterContainerEl.classList = 'image is-64x64'
+            const historyMoviePosterImageEl = document.createElement('img')
+            historyMoviePosterImageEl.src = searchHistory[i].moviePoster
+            historyMoviePosterImageEl.alt = searchHistory[i].movieTitle + " Poster"
+            const historyMovieInfoEl = document.createElement('div')
+            historyMovieInfoEl.classList = 'media-content'
+            const historyMovieTitleEl = document.createElement('p')
+            historyMovieTitleEl.classList = 'card-header-title'
+            historyMovieTitleEl.textContent = searchHistory[i].movieTitle
+            const historyMovieDescriptionEl = document.createElement('div')
+            historyMovieDescriptionEl.classList = 'content'
+            historyMovieDescriptionEl.textContent = searchHistory[i].moviePlot
+            const historyMovieHeartIconNavEl = document.createElement('nav')
+            historyMovieHeartIconNavEl.classList = 'level'
+            const historyMovieIconContainerEl = document.createElement('div')
+            historyMovieIconContainerEl.classList = 'level-left'
+            const historyMovieIconLinkEl = document.createElement('div')
+            historyMovieIconLinkEl.classList = 'level-item'
+            const historyMovieIconEl = document.createElement('span')
+            historyMovieIconEl.classList = 'icon is-small'
+            const historyMovieHeartEl = document.createElement('i')
+            historyMovieHeartEl.classList = 'fas fa-heart'
+
+            historyModalEl.appendChild(historyMovieEl)
+            historyMovieEl.appendChild(historyMovieContainerEl)
+            historyMovieContainerEl.appendChild(historyMoviePosterEl)
+            historyMoviePosterEl.appendChild(historyMoviePosterContainerEl)
+            historyMoviePosterContainerEl.appendChild(historyMoviePosterImageEl)
+            historyMovieContainerEl.appendChild(historyMovieInfoEl)
+            historyMovieInfoEl.appendChild(historyMovieTitleEl)
+            historyMovieInfoEl.appendChild(historyMovieDescriptionEl)
+            historyMovieInfoEl.appendChild(historyMovieHeartIconNavEl)
+            historyMovieHeartIconNavEl.appendChild(historyMovieIconContainerEl)
+            historyMovieIconContainerEl.appendChild(historyMovieIconLinkEl)
+            historyMovieIconLinkEl.appendChild(historyMovieIconEl)
+            historyMovieIconEl.appendChild(historyMovieHeartEl)
+
+            }
+
+        }
 }
+
 
 let closeHistory = function () {
     historyModal.classList.toggle('is-active')
