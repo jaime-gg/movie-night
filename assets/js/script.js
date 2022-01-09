@@ -335,8 +335,10 @@ const displayFavorites = function () {
 
     favoritesModal.classList.add('is-active')
     let modalBackground = favoritesModal.querySelector('.modal-background')
-    let modalClose = favoritesModal.querySelector('.delete')
+    let modalDelete = favoritesModal.querySelector('.delete')
+    let modalClose = favoritesModal.querySelector('#close-button')
     modalBackground.addEventListener('click', closeFavorites)
+    modalDelete.addEventListener('click', closeFavorites)
     modalClose.addEventListener('click', closeFavorites)
 
     if (favoriteMovies.length === 0) {
@@ -345,6 +347,11 @@ const displayFavorites = function () {
 
     }
     else {
+        const favoritesModalEl = document.querySelector('#favorites-content')
+        while (favoritesModalEl.firstChild) {
+            favoritesModalEl.removeChild(favoritesModalEl.firstChild);
+        }
+    
         for (var i = 0; i < favoriteMovies.length; i++) {
 
             let isMovie = function (movie) {
@@ -375,14 +382,13 @@ const displayFavorites = function () {
             favoriteMovieHeartIconNavEl.classList = 'level'
             const favoriteMovieIconContainerEl = document.createElement('div')
             favoriteMovieIconContainerEl.classList = 'level-left'
-            const favoriteMovieIconLinkEl = document.createElement('a')
+            const favoriteMovieIconLinkEl = document.createElement('div')
             favoriteMovieIconLinkEl.classList = 'level-item'
             const favoriteMovieIconEl = document.createElement('span')
             favoriteMovieIconEl.classList = 'icon is-small'
             const favoriteMovieHeartEl = document.createElement('i')
             favoriteMovieHeartEl.classList = 'fas fa-heart'
 
-            const favoritesModalEl = document.querySelector('#favorites-content')
             favoritesModalEl.appendChild(favoriteMovieEl)
             favoriteMovieEl.appendChild(favoriteMovieContainerEl)
             favoriteMovieContainerEl.appendChild(favoriteMoviePosterEl)
@@ -396,6 +402,13 @@ const displayFavorites = function () {
             favoriteMovieIconContainerEl.appendChild(favoriteMovieIconLinkEl)
             favoriteMovieIconLinkEl.appendChild(favoriteMovieIconEl)
             favoriteMovieIconEl.appendChild(favoriteMovieHeartEl)
+
+            favoriteMovieIconContainerEl.addEventListener('click', function() {
+                favoriteMovieHeartEl.classList.remove("fas")
+                favoriteMovieHeartEl.classList.add("far")
+                saveMovieHandler(favoriteMovieObj.movieTitle)
+                displayFavorites()
+            })
         }
     }
 }
@@ -424,4 +437,5 @@ historyButton.addEventListener('click', displayHistory)
 createAutoFillListOfMovies()
 
 loadMovieFavorites()
+
 loadSearchHistory()

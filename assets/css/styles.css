@@ -41,6 +41,10 @@
     padding: 1rem;
 }
 
+.fa-arrow-left {
+    padding-right: 10px;
+}
+
 p > a {
     text-decoration: underline;
     text-underline-offset: 2px;
