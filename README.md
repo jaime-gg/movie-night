@@ -1,50 +1,54 @@
-# Interactive Front-End Project | Name Pending
+# Interactive Front-End Project | Movie Night
 
 
 ## Project Summary
 
-In this day and age we as consumers have access to millions of movies through the vast amounts of streaming services available to the public. As such, we often find ourselves overwhelmed by these many options. For example, many of us have found ourselves desperately wanting to watch a certain movie or show, only to discover that it is not available on our favored streaming service. Instead of forcing the average consumer to desperately search the catalogs of several different websites, it is our goal to help streamline the movie watching process. 
+In this day and age we as consumers have access to millions of movies through the vast amounts of streaming services available to the public. As such, we often find ourselves overwhelmed by these many options. We find that there is a need for an application that allows us to search for any movie, and be able to view its ratings, as well as bookmark those that stand out to us. 
 
-We propose the development of an application that uses web API’s, such as that of IMBD and others, to host a catalog of movies that when selected would instantly tell the user simple information such as where this movie is available to stream, as well as potential content such as ratings or synopses.
+We propose the development of an application that uses web API’s, such as that of IMBD and others, to host a catalog of movies that when selected would instantly tell the user simple information such as ratings, synopsis, and provide a movie posters. Additionally, in future developmet we aim for features that allow users to easily discover which platforms each movie could be streamed. 
 ...
 
 ## Developers
 
-1. Jaime Gallegos Gallegos
+1. Dani Davis
 
-2. Ryan Moon
+2. Jaime Gallegos Garcia
 
-3. Dani Davis
+3. Ryan Moon
+
 
 ## Installation Instructions
 
-- Clone our repo to your computer
+- Clone the repo to your local computer, and then access it through a web browser. 
 
-- ...
 
 
 ## Animated Gifs/Pictures of App
 
-- Place various screens of your app here after they have been built
 
 ## Tech Stack
 
-- What languages is it written with: HTML, CSS, JavaScript
+- Languages: 
+    - HTML 
+    - CSS 
+    - JavaScript
 
 - What libraries are used: 
-
-- Other: 
+    - Font Awesome
+    - Google Fonts
+    - Jquery 
+    - Bulma
 
 
 ## APIs
-
--
+- IMBD-API.COM
+- OMBDapi.com
 
 ## MVP (Minimum Viable Product)
-
-- The MVP will be an application that allows a user to input the name of a movie. The application will return information about where to stream the movie, ratings, and a synopsis/description. 
+- The MVP will be an application that allows a user to input the name of a movie. The application will return information to the user, such as rating, as well as a movie poster, and give the user the capability to "faviote" a movie. 
 
 
 ## Stretch Goals
-
--
+- In the future we plan to include access to an API that allows for a user to easily find out where a movie can be streamed. 
+- We plan to have access to other sources of movie ratings, such as Rotten Tomatoes and possibly a crowd-sourced rating system. 
+- We plan to include more information such as the run time of the film. S
