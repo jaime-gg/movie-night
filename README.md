@@ -25,6 +25,13 @@ We propose the development of an application that uses web API’s, such as that
 
 ## Animated Gifs/Pictures of App
 
+![Demonstration the appearence of the application on load.](./assets/images/1-on-load.png)
+
+
+![Demonstration the search and like functions.](./assets/images/2.searching-and-heart.gif)
+
+
+![Demonstration the website and navigation's mobile responsivness.](./assets/images/3.menu-and-mobile.gif)
 
 ## Tech Stack
 
