@@ -15,6 +15,7 @@ let historyModal = document.querySelector('#history-modal')
 
 
 
+
 /**
  * Displays error text and removes error text after 10 seconds
  * @param errorMessage
@@ -54,6 +55,9 @@ const createAutoFillListOfMovies = function () {
  */
 const getRandomMovie = () => {
     const index = Math.floor(Math.random() * autoFillMovies.length)
+    if(displayedMovies.includes(autoFillMovies[index])){
+        return getRandomMovie()
+    }
     getMovieInformation(autoFillMovies[index])
 }
 
@@ -513,6 +517,11 @@ const displayHistory = function () {
     }
 }
 
+// clear the entire page button 
+$("#clear-entire-page").click(function () {
+    $('#Search-Cards').empty();
+    displayedMovies = [];
+})
 
 let closeHistory = function () {
     historyModal.classList.toggle('is-active')

@@ -36,12 +36,6 @@
                     <div id="navbarMenu" class="navbar-menu">
                         <div class="navbar-end">
                             <span class="navbar-item">
-                                <button class="button is-white is-outlined">
-                                    <span class="icon"><i class="fas fa-trash-alt"></i></span>
-                                    <span>Clear Page</span>
-                                </button>
-                            </span>
-                            <span class="navbar-item">
                                 <button class="button is-white is-outlined" id="favorites-button">
                                     <span class="icon"><i class="fas fa-heart"></i></span>
                                     <span>Favorites</span>
@@ -81,7 +75,12 @@
                         </p>
                         <p class="control">
                             <button class="button is-danger">
-                                Search
+                                <span class="icon"><i class="fas fa-search"></i></span>
+                                <span>Search</span>
+                            </button>
+                            <button class="button is-danger" id="clear-entire-page">
+                                <span class="icon"><i class="fas fa-trash-alt"></i></span>
+                                <span>Clear Page</span>
                             </button>
                         </p>
                     </form>
@@ -139,6 +138,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-ui-touch-punch@0.2.3/jquery.ui.touch-punch.min.js"></script>
     <script src="./assets/js/script.js"></script>
 </body>
 
