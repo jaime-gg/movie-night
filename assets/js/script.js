@@ -4,6 +4,17 @@ let favoriteMovies = [];
 
 let autoFillMovies = []
 
+let displayedMovies = []
+
+let searchHistory = []
+
+const favoritesButton = document.querySelector('#favorites-button')
+let favoritesModal = document.querySelector('#favorites-modal')
+const historyButton = document.querySelector('#history-button')
+let historyModal = document.querySelector('#history-modal')
+
+
+
 /**
  * Displays error text and removes error text after 10 seconds
  * @param errorMessage
@@ -14,10 +25,10 @@ const errorHandler = (errorMessage) => {
 
     $("#error-handler").append(errorEl)
 
-    const deleteError = setInterval(()=>{
+    const deleteError = setInterval(() => {
         $(errorEl).remove()
         clearInterval(deleteError)
-    },10*1000)
+    }, 10 * 1000)
 
 }
 
@@ -32,7 +43,7 @@ const createAutoFillListOfMovies = function () {
                     autoFillMovies.push(movie.title)
                 }
             })
-        }else{
+        } else {
             errorHandler("Cannot get info from IMDB")
         }
     })
@@ -108,8 +119,30 @@ var displayMovieData = function (movieInfo) {
         whereToView: ""
     }
 
+    saveSearchedMovie(movieDetails)
     createMovieCard(movieDetails)
 
+}
+
+var saveSearchedMovie = function (movieDetails) {
+    if (searchHistory.length === 0) {
+        searchHistory.push(movieDetails)
+        localStorage.setItem('movieSearches', JSON.stringify(searchHistory))
+    }
+    else {
+        for (var i = 0; i < searchHistory.length; i++) {
+            if (movieDetails.movieTitle === searchHistory[i].movieTitle) {
+                return
+            }
+            else {
+                var movieNotSearchedYet = true
+            }
+        }
+    }
+    if (movieNotSearchedYet === true) {
+        searchHistory.push(movieDetails)
+        localStorage.setItem('movieSearches', JSON.stringify(searchHistory))
+    }
 }
 
 /**
@@ -118,7 +151,13 @@ var displayMovieData = function (movieInfo) {
  */
 const createMovieCard = (movieDetails) => {
 
-    //TODO - write a function to check if this movie is in the favorites on creation
+    if (displayedMovies.includes(movieDetails.movieTitle)) {
+        errorHandler("Movie is currently being displayed")
+        return;
+    } else {
+        displayedMovies.push(movieDetails.movieTitle)
+    }
+
     const isMovieFavorited = favoriteMovies.includes(movieDetails.movieTitle)
 
     //Create Column
@@ -212,6 +251,8 @@ const createMovieCard = (movieDetails) => {
     //Handler for deleting the card
     $(deleteButtonEl).click(function () {
         column.remove()
+        let indexOfMovie = displayedMovies.indexOf(movieDetails.movieTitle)
+        displayedMovies.splice(indexOfMovie, 1)
     })
 
     $("#Search-Cards").append(column)
@@ -248,6 +289,15 @@ const loadMovieFavorites = () => {
     }
 }
 
+const loadSearchHistory = function () {
+    if (localStorage.getItem('movieSearches')) {
+        searchHistory = JSON.parse(localStorage.getItem('movieSearches'))
+    } else {
+        searchHistory = []
+
+    }
+}
+
 
 /**
  * Submit movie handler
@@ -281,5 +331,200 @@ $("#autocomplete").autocomplete({
 
 })
 
+const displayFavorites = function () {
+
+    favoritesModal.classList.add('is-active')
+    let modalBackground = favoritesModal.querySelector('.modal-background')
+    let modalDelete = favoritesModal.querySelector('.delete')
+    let modalClose = favoritesModal.querySelector('#close-button')
+    modalBackground.addEventListener('click', closeFavorites)
+    modalDelete.addEventListener('click', closeFavorites)
+    modalClose.addEventListener('click', closeFavorites)
+
+    if (favoriteMovies.length === 0) {
+        const favoritesModalEl = document.querySelector('#favorites-content')
+        favoritesModalEl.textContent = 'You have not picked any favorite movies yet!'
+
+    }
+    else {
+        const favoritesModalEl = document.querySelector('#favorites-content')
+        while (favoritesModalEl.firstChild) {
+            favoritesModalEl.removeChild(favoritesModalEl.firstChild);
+        }
+
+        for (var i = 0; i < favoriteMovies.length; i++) {
+
+            let isMovie = function (movie) {
+                return movie.movieTitle === favoriteMovies[i]
+            }
+            let favoriteMovieObj = searchHistory.find(isMovie)
+
+            const favoriteMovieEl = document.createElement('div')
+            favoriteMovieEl.classList = 'box'
+            const favoriteMovieContainerEl = document.createElement('article')
+            favoriteMovieContainerEl.classList = 'media'
+            const favoriteMoviePosterEl = document.createElement('div')
+            favoriteMoviePosterEl.classList = 'media-left'
+            const favoriteMoviePosterContainerEl = document.createElement('figure')
+            favoriteMoviePosterContainerEl.classList = 'image is-64x64'
+            const favoriteMoviePosterImageEl = document.createElement('img')
+            favoriteMoviePosterImageEl.src = favoriteMovieObj.moviePoster
+            favoriteMoviePosterImageEl.alt = favoriteMovieObj.movieTitle + " Poster"
+            const favoriteMovieInfoEl = document.createElement('div')
+            favoriteMovieInfoEl.classList = 'media-content'
+            const favoriteMovieTitleEl = document.createElement('p')
+            favoriteMovieTitleEl.classList = 'card-header-title'
+            favoriteMovieTitleEl.textContent = favoriteMovieObj.movieTitle
+            const favoriteMovieDescriptionEl = document.createElement('div')
+            favoriteMovieDescriptionEl.classList = 'content'
+            favoriteMovieDescriptionEl.textContent = favoriteMovieObj.moviePlot
+            const favoriteMovieHeartIconNavEl = document.createElement('nav')
+            favoriteMovieHeartIconNavEl.classList = 'level'
+            const favoriteMovieIconContainerEl = document.createElement('div')
+            favoriteMovieIconContainerEl.classList = 'level-left'
+            const favoriteMovieIconLinkEl = document.createElement('div')
+            favoriteMovieIconLinkEl.classList = 'level-item'
+            const favoriteMovieIconEl = document.createElement('span')
+            favoriteMovieIconEl.classList = 'icon is-small'
+            const favoriteMovieHeartEl = document.createElement('i')
+            favoriteMovieHeartEl.classList = 'fas fa-heart'
+
+            favoritesModalEl.appendChild(favoriteMovieEl)
+            favoriteMovieEl.appendChild(favoriteMovieContainerEl)
+            favoriteMovieContainerEl.appendChild(favoriteMoviePosterEl)
+            favoriteMoviePosterEl.appendChild(favoriteMoviePosterContainerEl)
+            favoriteMoviePosterContainerEl.appendChild(favoriteMoviePosterImageEl)
+            favoriteMovieContainerEl.appendChild(favoriteMovieInfoEl)
+            favoriteMovieInfoEl.appendChild(favoriteMovieTitleEl)
+            favoriteMovieInfoEl.appendChild(favoriteMovieDescriptionEl)
+            favoriteMovieInfoEl.appendChild(favoriteMovieHeartIconNavEl)
+            favoriteMovieHeartIconNavEl.appendChild(favoriteMovieIconContainerEl)
+            favoriteMovieIconContainerEl.appendChild(favoriteMovieIconLinkEl)
+            favoriteMovieIconLinkEl.appendChild(favoriteMovieIconEl)
+            favoriteMovieIconEl.appendChild(favoriteMovieHeartEl)
+
+            favoriteMovieIconContainerEl.addEventListener('click', function () {
+                favoriteMovieHeartEl.classList.remove("fas")
+                favoriteMovieHeartEl.classList.add("far")
+                saveMovieHandler(favoriteMovieObj.movieTitle)
+                displayFavorites()
+            })
+        }
+    }
+}
+
+let closeFavorites = function () {
+    favoritesModal.classList.toggle('is-active')
+}
+
+const displayHistory = function () {
+    loadSearchHistory()
+    loadMovieFavorites()
+
+    historyModal.classList.add('is-active')
+    let modalBackground = historyModal.querySelector('.modal-background')
+    let modalClose = historyModal.querySelector('#close-button')
+    let modalDelete = historyModal.querySelector('.delete')
+    modalBackground.addEventListener('click', closeHistory)
+    modalClose.addEventListener('click', closeHistory)
+    modalDelete.addEventListener('click', closeHistory)
+
+
+    if (searchHistory.length === 0) {
+        const historyModalEl = document.querySelector('#history-content')
+        historyModalEl.textContent = 'You have not searched for any movies yet!'
+    }
+    else {
+        const historyModalEl = document.querySelector('#history-content')
+        while (historyModalEl.firstChild) {
+            historyModalEl.removeChild(historyModalEl.firstChild);
+        }
+
+        for (var i = 0; i < searchHistory.length; i++) {
+
+            const historyMovieEl = document.createElement('div')
+            historyMovieEl.classList = 'box'
+            const historyMovieContainerEl = document.createElement('article')
+            historyMovieContainerEl.classList = 'media'
+            const historyMoviePosterEl = document.createElement('div')
+            historyMoviePosterEl.classList = 'media-left'
+            const historyMoviePosterContainerEl = document.createElement('figure')
+            historyMoviePosterContainerEl.classList = 'image is-64x64'
+            const historyMoviePosterImageEl = document.createElement('img')
+            historyMoviePosterImageEl.src = searchHistory[i].moviePoster
+            historyMoviePosterImageEl.alt = searchHistory[i].movieTitle + " Poster"
+            const historyMovieInfoEl = document.createElement('div')
+            historyMovieInfoEl.classList = 'media-content'
+            const historyMovieTitleEl = document.createElement('p')
+            historyMovieTitleEl.classList = 'card-header-title'
+            historyMovieTitleEl.textContent = searchHistory[i].movieTitle
+            const historyMovieDescriptionEl = document.createElement('div')
+            historyMovieDescriptionEl.classList = 'content'
+            historyMovieDescriptionEl.textContent = searchHistory[i].moviePlot
+            const historyMovieHeartIconNavEl = document.createElement('nav')
+            historyMovieHeartIconNavEl.classList = 'level'
+            const historyMovieIconContainerEl = document.createElement('div')
+            historyMovieIconContainerEl.classList = 'level-left'
+            const historyMovieIconLinkEl = document.createElement('div')
+            historyMovieIconLinkEl.classList = 'level-item'
+            const historyMovieIconEl = document.createElement('span')
+            historyMovieIconEl.classList = 'icon is-small'
+            const historyMovieHeartEl = document.createElement('i')
+
+            if (favoriteMovies.indexOf(searchHistory[i].movieTitle) !== -1) {
+                historyMovieHeartEl.classList = 'fas fa-heart'
+            } else {
+                historyMovieHeartEl.classList = 'far fa-heart'
+            }
+
+            historyModalEl.appendChild(historyMovieEl)
+            historyMovieEl.appendChild(historyMovieContainerEl)
+            historyMovieContainerEl.appendChild(historyMoviePosterEl)
+            historyMoviePosterEl.appendChild(historyMoviePosterContainerEl)
+            historyMoviePosterContainerEl.appendChild(historyMoviePosterImageEl)
+            historyMovieContainerEl.appendChild(historyMovieInfoEl)
+            historyMovieInfoEl.appendChild(historyMovieTitleEl)
+            historyMovieInfoEl.appendChild(historyMovieDescriptionEl)
+            historyMovieInfoEl.appendChild(historyMovieHeartIconNavEl)
+            historyMovieHeartIconNavEl.appendChild(historyMovieIconContainerEl)
+            historyMovieIconContainerEl.appendChild(historyMovieIconLinkEl)
+            historyMovieIconLinkEl.appendChild(historyMovieIconEl)
+            historyMovieIconEl.appendChild(historyMovieHeartEl)
+
+            historyMovieIconContainerEl.addEventListener('click', function () {
+
+                historyMovieHeartEl.classList.toggle("fas")
+                historyMovieHeartEl.classList.toggle("far")
+                let newClass = historyMovieHeartEl.getAttribute('class')
+                let movieName = historyMovieTitleEl.textContent
+                console.log(movieName)
+                if (newClass === 'fa-heart fas') {
+                    favoriteMovies.push(movieName)
+                    localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
+                } else {
+                    const indexToRemove = favoriteMovies.indexOf(movieName)
+                    if (indexToRemove !== -1) {
+                        favoriteMovies.splice(indexToRemove, 1)
+                        localStorage.setItem('favorites', JSON.stringify(favoriteMovies))
+                    }
+                }
+            })
+        }
+    }
+}
+
+
+let closeHistory = function () {
+    historyModal.classList.toggle('is-active')
+}
+/* "favorites" button handler */
+favoritesButton.addEventListener('click', displayFavorites)
+/* "history" button handler */
+historyButton.addEventListener('click', displayHistory)
+
+
 createAutoFillListOfMovies()
+
 loadMovieFavorites()
+
+loadSearchHistory()
