@@ -54,6 +54,9 @@ const createAutoFillListOfMovies = function () {
  */
 const getRandomMovie = () => {
     const index = Math.floor(Math.random() * autoFillMovies.length)
+    if(displayedMovies.includes(autoFillMovies[index])){
+        return getRandomMovie()
+    }
     getMovieInformation(autoFillMovies[index])
 }
 
