@@ -66,24 +66,28 @@
                     </span>
                     <h1 class="title is-1"> Search and Discover </h1>
                     <h3 class="title is-4"> There are many movies to choose from, what are you searching for?</h3>
+                    <div class="columns">
+                        <form class="field column is-grouped" id="form">
+                            <p class="control is-expanded">
+                                <label for="autocomplete">
+                                    <input class="input" type="text" placeholder="What Are We Watching?" id="autocomplete">
+                                </label>
+                            </p>
+                            <p class="control">
+                                <button class="button is-danger">
+                                    <span class="icon"><i class="fas fa-search"></i></span>
+                                    <span>Search</span>
+                                </button>
 
-                    <form class="field is-grouped" id="form">
-                        <p class="control is-expanded">
-                            <label for="autocomplete">
-                                <input class="input" type="text" placeholder="What Are We Watching?" id="autocomplete">
-                            </label>
-                        </p>
-                        <p class="control">
-                            <button class="button is-danger">
-                                <span class="icon"><i class="fas fa-search"></i></span>
-                                <span>Search</span>
-                            </button>
+                            </p>
+                        </form>
+                        <div class="column is-narrow"> 
                             <button class="button is-danger" id="clear-entire-page">
                                 <span class="icon"><i class="fas fa-trash-alt"></i></span>
                                 <span>Clear Page</span>
                             </button>
-                        </p>
-                    </form>
+                        </div>
+                    </div>
                     <div id="error-handler"></div>
                 </div>
                 <!-- add cards with movie info here -->
